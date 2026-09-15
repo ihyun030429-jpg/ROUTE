@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROUTE+ — A ROUTE, MORE THAN A ROUTE.</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f4;--text:#171717;--muted:#777;--line:#d9d7d2;
+  --pad:clamp(22px,5vw,80px)
+}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:Arial,"Noto Sans KR",sans-serif;
+  font-weight:300;line-height:1.6
+}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%;height:auto}
+nav{
+  position:fixed;z-index:20;top:0;left:0;width:100%;
+  padding:20px var(--pad);display:flex;justify-content:space-between;
+  mix-blend-mode:multiply
+}
+.logo{font-size:15px;font-weight:600}
+.navlinks{display:flex;gap:25px;font-size:9px;letter-spacing:.14em}
+.navlinks a{opacity:.65}.navlinks a:hover{opacity:1}
+
+section{padding:clamp(105px,13vw,190px) var(--pad)}
+.kicker{font-size:9px;letter-spacing:.18em;color:#8b8984;margin-bottom:28px}
+h1,h2,h3{font-weight:300;letter-spacing:-.05em}
+.display{font-size:clamp(28px,3.5vw,52px);line-height:1.05}
+.body{
+  font-family:"Noto Sans KR",sans-serif;font-size:13px;
+  line-height:1.9;color:#555;max-width:590px
+}
+.statement{
+  font-size:clamp(20px,2.4vw,34px);line-height:1.22;margin-top:48px
+}
+
+/* OPENING — 세로 메인컷 + 왼쪽 타이포 */
+.hero{
+  height:100svh;padding:0;display:grid;
+  grid-template-columns:38% 62%;background:#f8f7f4;overflow:hidden
+}
+.hero-copy{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 var(--pad);z-index:2
+}
+.hero-copy .mini{font-size:10px;letter-spacing:.2em;margin-bottom:30px}
+.hero-copy h1{font-size:clamp(30px,4vw,58px);line-height:.92}
+.hero-copy p{
+  margin-top:30px;font-family:"Noto Sans KR",sans-serif;
+  font-size:13px;color:#666;line-height:1.8
+}
+.hero-image-wrap{height:100svh;overflow:hidden}
+.hero-image-wrap img{height:100%;object-fit:cover;object-position:center}
+
+/* INTRO / SITE */
+.intro-grid{display:grid;grid-template-columns:.75fr 1.5fr;gap:9vw}
+
+/* 00 / OPENING — clear separation from SITE */
+.opening-section{background:#f1f0ec;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.opening-section .intro-grid{min-height:56vh;align-items:center}
+.opening-flow{display:flex;gap:18px;align-items:center;margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:9px;letter-spacing:.12em;color:#666}
+.opening-flow span{white-space:nowrap}
+.opening-flow i{width:24px;height:1px;background:#aaa;display:block}
+.opening-lead{font-size:clamp(24px,2.7vw,38px);line-height:1.28;margin-top:30px;letter-spacing:-.04em}
+.opening-note{margin-top:20px}
+
+.site-section{background:var(--bg)}
+.site-section .intro-grid{min-height:34vh;align-items:end}
+.site-main{margin-top:75px}
+.site-main img{width:100%;max-height:78vh;object-fit:cover}
+.caption{font-size:8px;letter-spacing:.12em;color:#92908b;margin-top:11px}
+.site-split{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:7vw;
+  align-items:end;margin-top:75px
+}
+.site-split img{width:100%;max-height:68vh;object-fit:cover}
+.site-number{font-size:clamp(44px,6vw,86px);line-height:.85;letter-spacing:-.08em}
+.map{
+  display:inline-block;margin-top:25px;border-bottom:1px solid;
+  padding-bottom:5px;font-size:9px;letter-spacing:.13em
+}
+
+/* SITE REWORK */
+.site-photo{margin-top:70px}
+.site-photo img{width:100%;max-height:72vh;object-fit:cover}
+.site-analysis{display:grid;grid-template-columns:.72fr 1.28fr;gap:7vw;align-items:center;margin-top:85px}
+.site-analysis-copy h3{font-size:20px;margin-top:12px;letter-spacing:-.02em}
+.site-analysis-copy .body{margin-top:24px}
+.map-preview{display:block;position:relative;overflow:hidden;background:#e9e8e4}
+.map-preview img{width:100%;aspect-ratio:16/10;object-fit:cover;transition:transform .5s ease}
+.map-preview:hover img{transform:none}
+.map-preview span{position:absolute;right:18px;bottom:16px;background:rgba(248,247,244,.92);padding:9px 12px;font-size:8px;letter-spacing:.12em}
+.static-map{display:block}
+.static-map img{transition:none}
+.single-site-image{grid-template-columns:.72fr 1.28fr}
+
+/* UNDERPASS */
+.underpass{background:#eceae5}
+.underpass-img{width:100%;max-height:70vh;object-fit:cover;margin:60px 0}
+.underpass-head{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:end}
+.underpass-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:70px 0 55px}
+.underpass-grid figure{margin:0}
+/* text left / diagram right, matching the SITE composition */
+.underpass-single{display:grid;grid-template-columns:.72fr 1.28fr;gap:7vw;align-items:center;margin:75px 0 55px}
+.underpass-single .underpass-copy{max-width:430px}
+.underpass-single figure{margin:0;min-width:0}
+.underpass-single img{display:block;width:100%;max-height:62vh;aspect-ratio:auto;object-fit:contain;background:transparent}
+.underpass-single figcaption{font-size:8px;letter-spacing:.12em;color:#888;margin-top:10px}
+.underpass-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#ddd}
+.underpass-grid figcaption{font-size:8px;letter-spacing:.12em;color:#888;margin-top:10px}
+.big-word{
+  font-size:clamp(24px,2.8vw,38px);line-height:.9;
+  letter-spacing:-.065em;margin:42px 0 48px
+}
+
+/* PROCESS */
+.process{text-align:center}
+.process h2{font-size:clamp(32px,5vw,64px);line-height:.95}
+.process-sub{margin:32px auto 70px}
+.process-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)
+}
+.step{
+  min-height:185px;padding:25px 12px;
+  border-right:1px solid var(--line);
+  display:flex;flex-direction:column;justify-content:center
+}
+.step:last-child{border-right:0}
+.step-no,.space-no{font-size:8px;letter-spacing:.16em;color:#999;margin-bottom:17px}
+.step h3{font-size:15px}.step p{font-size:10px;color:#777;margin-top:5px}
+
+/* SPACE */
+.space-head{margin-bottom:72px}
+.space-head h2{font-size:clamp(34px,5vw,66px);line-height:.95}
+.space-head .body{margin-top:28px}
+.space-item{
+  display:grid;grid-template-columns:1.3fr .7fr;
+  gap:7vw;align-items:center;margin-bottom:110px
+}
+.space-item.reverse{grid-template-columns:.7fr 1.3fr}
+.space-item.reverse img{grid-column:2}
+.space-item.reverse .space-copy{grid-column:1;grid-row:1}
+.space-item img{aspect-ratio:16/10;object-fit:cover;background:#ddd}
+.space-copy h3{font-size:clamp(23px,2.6vw,38px);line-height:1.08;margin-bottom:22px}
+.space-copy .body{font-size:12px}
+
+/* DRAWINGS */
+.drawings{background:#fff}
+.drawings-head{display:flex;justify-content:space-between;gap:40px;align-items:end}
+.drawings-head h2{font-size:clamp(34px,5vw,66px);line-height:.95}
+.drawings-head .body{max-width:420px}
+.drawings-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);
+  margin-top:65px;align-items:start
+}
+.drawing{
+  margin-top:0;padding-top:18px;border-top:1px solid var(--line);
+}
+.drawing-title{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:18px
+}
+.drawing-title h3{font-size:17px}.drawing-title span{font-size:8px;letter-spacing:.14em;color:#888}
+.drawing img{
+  display:block;width:100%;height:auto;background:#fff;
+  object-fit:contain;max-height:70vh
+}
+
+/* CONCEPT */
+.concept{background:#171717;color:#f7f5f0;text-align:center}
+.concept h2{
+  font-size:clamp(34px,5.5vw,72px);line-height:.84;
+  letter-spacing:-.085em
+}
+.concept p{
+  font-family:"Noto Sans KR",sans-serif;font-size:15px;
+  line-height:1.9;max-width:620px;margin:50px auto 0;color:#d2d0ca
+}
+.keywords{margin-top:50px;font-size:9px;letter-spacing:.18em;color:#b9b5ac}
+
+/* EXPERIENCE */
+.experience-head h2{font-size:clamp(34px,5vw,66px);line-height:.9}
+.experience{margin-top:85px}
+.exp-item{margin-bottom:110px}
+.exp-item-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:20px
+}
+.exp-title{font-size:20px;letter-spacing:-.03em}
+.exp-desc{font-family:"Noto Sans KR",sans-serif;font-size:10px;color:#777}
+.exp-gallery{
+  display:grid;grid-template-columns:1.55fr .75fr;gap:16px;align-items:start
+}
+.exp-gallery img{width:100%;aspect-ratio:5/3;object-fit:cover;background:#ddd}
+.exp-gallery img.small{aspect-ratio:4/5}
+.exp-item:nth-child(even) .exp-gallery{grid-template-columns:.75fr 1.55fr}
+.exp-item:nth-child(even) .exp-gallery img:first-child{order:2}
+
+/* FINAL RENDERS */
+.final-renders{padding-bottom:clamp(120px,16vw,230px)}
+.render-gallery{display:grid;grid-template-columns:1.55fr .8fr;gap:16px;margin-top:75px;align-items:start}
+.render-gallery img{width:100%;background:#ddd;object-fit:cover}
+.render-gallery img:first-child{grid-row:span 2;aspect-ratio:4/5}
+.render-gallery img:not(:first-child){aspect-ratio:16/10}
+.all-renders{grid-template-columns:repeat(2,1fr);gap:18px;margin-top:65px}
+.all-renders img{aspect-ratio:auto !important;object-fit:cover}
+.all-renders img:nth-child(3n){grid-column:span 1}
+@media(min-width:1100px){.all-renders img:nth-child(1),.all-renders img:nth-child(6),.all-renders img:nth-child(11){grid-column:span 2}}
+
+/* END */
+.end{
+  min-height:75vh;display:flex;flex-direction:column;
+  justify-content:center;text-align:center;border-top:1px solid var(--line)
+}
+.end h2{font-size:clamp(52px,9vw,125px);line-height:.8;letter-spacing:-.09em}
+.end p{margin-top:32px;font-family:"Noto Sans KR",sans-serif;font-size:13px;color:#555}
+.end small{margin-top:75px;font-size:8px;letter-spacing:.15em;color:#999}
+.contact{margin:80px auto 0;max-width:720px;border-top:1px solid var(--line);padding-top:28px;display:grid;grid-template-columns:120px 1fr;gap:24px;text-align:left}
+.contact-label{font-size:9px;letter-spacing:.18em;color:#999}
+.contact-info{display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:1.6}
+.contact-name{font-size:15px;letter-spacing:.06em}
+.contact a{color:inherit;text-decoration:none}
+.contact a:hover{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:700px){.contact{grid-template-columns:1fr;gap:12px;margin-top:55px}.contact-info{font-size:12px}}
+
+@media(max-width:760px){
+  nav{padding:17px 20px}.navlinks{gap:11px;font-size:7px}
+  section{padding:95px 20px}
+  .hero{height:auto;min-height:100svh;grid-template-columns:1fr}
+  .hero-copy{min-height:42svh;padding:110px 20px 50px;justify-content:flex-end}
+  .hero-image-wrap{height:58svh}
+
+  .site-analysis,.underpass-head,.underpass-single{grid-template-columns:1fr;gap:35px}
+  .underpass-grid{grid-template-columns:1fr;gap:28px}
+  .render-gallery{grid-template-columns:1fr;gap:10px}
+  .all-renders{grid-template-columns:1fr;gap:10px}
+  .all-renders img:nth-child(1),.all-renders img:nth-child(6),.all-renders img:nth-child(11){grid-column:auto}
+  .render-gallery img:first-child,.render-gallery img:not(:first-child){grid-row:auto;aspect-ratio:4/3}
+  .intro-grid,.site-split,.space-item,.space-item.reverse,.drawings-head{
+    grid-template-columns:1fr;display:grid;gap:35px
+  }
+  .process-grid{grid-template-columns:1fr}
+  .step{min-height:105px;border-right:0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:0}
+  .space-item.reverse img,.space-item.reverse .space-copy{
+    grid-column:auto;grid-row:auto
+  }
+  .space-item{margin-bottom:105px}
+  .drawings-grid{grid-template-columns:1fr;gap:55px;margin-top:45px}
+  .drawing img{max-height:none}
+  .exp-gallery,.exp-item:nth-child(even) .exp-gallery{
+    grid-template-columns:1fr;gap:10px
+  }
+  .exp-gallery img,.exp-gallery img.small{aspect-ratio:4/3}
+  .exp-item:nth-child(even) .exp-gallery img:first-child{order:initial}
+  .exp-item{margin-bottom:105px}
+  .exp-item-head{display:block}
+  .exp-desc{margin-top:4px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#top">ROUTE+</a>
+  <div class="navlinks">
+    <a href="#site">SITE</a>
+    <a href="#process">PROCESS</a>
+    <a href="#space">SPACE</a>
+    <a href="#drawings">DRAWINGS</a>
+    <a href="#experience">EXPERIENCE</a>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- 00 OPENING -->
+<section class="hero">
+  <div class="hero-copy">
+    <div class="mini">ROUTE+</div>
+    <h1>A ROUTE,<br>MORE THAN<br>A ROUTE.</h1>
+    <p>지나는 길 위에,<br>새로운 풍경을 더하다.</p>
+  </div>
+  <div class="hero-image-wrap">
+    <img src="images/main.jpg" alt="ROUTE+ main rendering">
+  </div>
+</section>
+
+<section class="opening-section">
+  <div class="kicker">00 / OPENING</div>
+  <div class="intro-grid">
+    <div>
+      <h2 class="display">아이들이<br>계속 지나가는 길</h2>
+      <div class="opening-flow"><span>SCHOOL</span><i></i><span>ACADEMY</span><i></i><span>ACADEMY</span><i></i><span>HOME</span></div>
+    </div>
+    <div>
+      <p class="body">아이들의 하루는 학교가 끝난 뒤에도 계속된다. 평촌학원가에서는 학교에서 학원으로, 한 학원에서 또 다른 학원으로 이동하는 일이 반복된다.</p>
+      <p class="body opening-note">수업 사이의 짧은 시간은 다시 이동으로 채워지고, 잠시 쉬거나 책을 읽을 공간이 필요하더라도 그곳에 가기 위해 또 다른 이동이 필요하다.</p>
+      <p class="opening-lead">그래서 필요한 것은 또 하나의 목적지가 아니라, <b>이미 지나고 있는 길에서 자연스럽게 머무를 수 있는 공간</b>이다.</p>
+      <p class="body opening-note">ROUTE+는 아이들의 일상에서 반복되는 이 이동을 출발점으로 삼는다. 매일 지나가는 길 자체를 새로운 공간 경험의 시작점으로 바라본다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 01 SITE -->
+<section id="site" class="site-section">
+  <div class="kicker">01 / THE SITE</div>
+  <div class="intro-grid">
+    <h2 class="display">평촌학원가</h2>
+    <div>
+      <h3 class="statement" style="margin-top:0">아이들의 하루가<br>계속되는 곳</h3>
+      <p class="body" style="margin-top:25px">학교가 끝나도 아이들의 하루는 끝나지 않는다. 평촌학원가는 짧은 거리 안에 다양한 학원과 교육시설이 밀집해 있는 교육 중심 지역이다. 아이들은 학교와 학원, 학원과 학원을 오가며 하루의 대부분을 이동 속에서 보낸다.</p>
+    </div>
+  </div>
+
+  <div class="site-analysis single-site-image">
+    <div class="site-analysis-copy">
+      <div class="site-number">350M</div>
+      <h3>OF ACADEMY DISTRICT</h3>
+      <p class="body">350m라는 길이는 단순한 물리적 거리가 아니다. 아이들에게는 하루에도 여러 번 반복해서 지나게 되는 생활의 길이다. 이 프로젝트는 이 반복되는 이동에 주목했다.</p>
+      <a id="mapLink" class="map" href="https://naver.me/xHgPiiPl" target="_blank" rel="noopener">VIEW THE SITE ↗</a>
+    </div>
+    <div class="map-preview static-map">
+      <img src="images/site02.jpg" alt="Pyeongchon Academy District site analysis map">
+    </div>
+  </div>
+</section>
+
+<!-- 02 UNDERPASS -->
+<section class="underpass" id="underpass">
+  <div class="kicker">02 / THE UNDERPASS</div>
+  <div class="underpass-single">
+    <div class="underpass-copy">
+      <h2 class="display">지하로 이어지는<br>일상의 길</h2>
+      <p class="body" style="margin-top:28px">학원가를 가로지르는 지하보도는 학교와 학원, 학원과 학원을 오가는 아이들이 자연스럽게 이용하는 통로다.</p>
+      <p class="body" style="margin-top:18px">하지만 이 공간의 역할은 이동에 집중되어 있다. 잠시 쉬거나 책을 읽거나 주변을 바라볼 수 있는 장소는 없다.</p>
+      <p class="body" style="margin-top:18px">ROUTE+는 기존 지하보도의 흐름을 없애지 않는다. 대신 이동이 이루어지는 길 주변을 확장해, <b>지나가는 과정 안에 머무를 수 있는 공간</b>을 더한다.</p>
+    </div>
+    <figure><img src="images/underpass02.jpg" alt="Underpass analysis diagram"><figcaption>UNDERPASS ANALYSIS</figcaption></figure>
+  </div>
+</section>
+
+<!-- 03 PROCESS -->
+<section class="process" id="process">
+  <div class="kicker">03 / PROCESS</div>
+  <h2>FROM PASSAGE<br>TO PLACE</h2>
+  <p class="body process-sub">기존의 이동 동선을 없애지 않고, 그 주변을 확장해 머무를 공간을 만든다.</p>
+  <div class="process-grid">
+    <div class="step"><div class="step-no">01</div><h3>EXISTING</h3><p>지나가는 길</p></div>
+    <div class="step"><div class="step-no">02</div><h3>EXPAND</h3><p>주변을 확장</p></div>
+    <div class="step"><div class="step-no">03</div><h3>INSERT</h3><p>머무름 삽입</p></div>
+    <div class="step"><div class="step-no">04</div><h3>COEXIST</h3><p>MOVE + STAY</p></div>
+    <div class="step"><div class="step-no">05</div><h3>CHOOSE</h3><p>지상 + 지하</p></div>
+  </div>
+</section>
+
+<!-- 04 SPACE -->
+<section id="space">
+  <div class="kicker">04 / THE SPACE</div>
+  <div class="space-head">
+    <h2>길 위에 새로운<br>풍경을 만들다</h2>
+    <p class="body">ROUTE+는 단순히 지하에 도서관을 집어넣은 공간이 아니다. 기존의 이동 경로를 따라 길의 폭과 레벨을 확장하고, 그 사이에 다양한 머무름을 삽입했다.</p>
+  </div>
+
+  <div class="space-item">
+    <img src="images/move.jpg" alt="Flowing bridge">
+    <div class="space-copy"><div class="space-no">01 / MOVE</div><h3>흐르는 브릿지</h3><p class="body">기존 지하보도의 이동을 이어가는 브릿지. 곡선으로 이어지는 흐름 속에서 빠르게 지나거나 천천히 주변을 바라볼 수 있다.</p></div>
+  </div>
+
+  <div class="space-item reverse">
+    <img src="images/stay.jpg" alt="Stay and reading space">
+    <div class="space-copy"><div class="space-no">02 / STAY</div><h3>길의 중간에서<br>잠시 멈추다</h3><p class="body">이동 동선의 주변에 책을 읽고, 쉬고, 친구와 이야기를 나눌 수 있는 공간을 삽입한다.</p></div>
+  </div>
+
+  <div class="space-item">
+    <img src="images/green.jpg" alt="Green space">
+    <div class="space-copy"><div class="space-no">03 / GREEN</div><h3>지하에서 만나는 자연</h3><p class="body">공간 곳곳에 녹지를 삽입한다. 지하에서도 도시와 단절되지 않고 자연과 함께 머무는 경험을 만든다.</p></div>
+  </div>
+
+  <div class="space-item reverse">
+    <img src="images/light.jpg" alt="Waffle structure and light">
+    <div class="space-copy"><div class="space-no">04 / LIGHT</div><h3>지하까지 내려오는 빛</h3><p class="body">상부의 와플 구조 사이의 틈으로 자연광을 지하 공간까지 끌어들인다. 지하에서도 시간의 흐름을 느낄 수 있도록.</p></div>
+  </div>
+</section>
+
+<!-- 05 DRAWINGS -->
+<section class="drawings" id="drawings">
+  <div class="kicker">05 / DRAWINGS</div>
+  <div class="drawings-head">
+    <h2>DRAWINGS</h2>
+    <p class="body">이동과 머무름이 겹쳐지는 공간을 도면으로 확인한다.</p>
+  </div>
+
+  <div class="drawings-grid">
+    <div class="drawing">
+      <div class="drawing-title"><h3>PLAN</h3><span>GROUND / UNDERGROUND</span></div>
+      <img src="images/plan.jpg" alt="Project plan drawing">
+    </div>
+
+    <div class="drawing">
+      <div class="drawing-title"><h3>SECTION</h3><span>MOVE + STAY</span></div>
+      <img src="images/section.jpg" alt="Project section drawing">
+    </div>
+  </div>
+</section>
+
+<!-- 06 CONCEPT -->
+<section class="concept">
+  <div class="kicker" style="color:#85827b">06 / CONCEPT</div>
+  <h2>FLOWING<br>LANDSCAPE</h2>
+  <p>아이들의 일상적인 이동이<br>머무름과 자연을 만나<br>새로운 풍경으로 이어지는 공간.</p>
+  <div class="keywords">FLOW · TERRAIN · GREEN · LIGHT</div>
+</section>
+
+<!-- 07 EXPERIENCE / GALLERY -->
+<section id="experience" class="final-renders">
+  <div class="kicker">07 / EXPERIENCE</div>
+  <div class="experience-head"><h2>EXPERIENCE</h2></div>
+  <div class="render-gallery all-renders">
+    <img src="images/experience01.jpg" alt="ROUTE+ rendering 01">
+    <img src="images/experience02.jpg" alt="ROUTE+ rendering 02">
+    <img src="images/experience03.jpg" alt="ROUTE+ rendering 03">
+    <img src="images/experience04.jpg" alt="ROUTE+ rendering 04">
+    <img src="images/experience05.jpg" alt="ROUTE+ rendering 05">
+    <img src="images/experience06.jpg" alt="ROUTE+ rendering 06">
+    <img src="images/move.jpg" alt="ROUTE+ flowing bridge rendering">
+    <img src="images/stay.jpg" alt="ROUTE+ stay space rendering">
+    <img src="images/green.jpg" alt="ROUTE+ green space rendering">
+    <img src="images/light.jpg" alt="ROUTE+ light rendering">
+    <img src="images/render01.jpg" alt="ROUTE+ additional rendering 01">
+    <img src="images/render02.jpg" alt="ROUTE+ additional rendering 02">
+    <img src="images/render03.jpg" alt="ROUTE+ additional rendering 03">
+  </div>
+</section>
+
+<section class="end">
+  <h2>ROUTE+</h2>
+  <p>A ROUTE, MORE THAN A ROUTE.<br>지나는 길 위에, 새로운 풍경을 더하다.</p>
+  <small>PYEONGCHON · 2026</small>
+
+  <div class="contact">
+    <div class="contact-label">CONTACT</div>
+    <div class="contact-info">
+      <div class="contact-name">LEEHYUN</div>
+      <a href="mailto:lh030429@naver.com">lh030429@naver.com</a>
+      <a href="tel:010-4797-7569">010-4797-7569</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const NAVER_MAP_URL="https://naver.me/xHgPiiPl";
+const link=document.getElementById("mapLink");
+if(link) link.href=NAVER_MAP_URL;
+</script>
+</body>
+</html>
